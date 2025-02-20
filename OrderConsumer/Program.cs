@@ -10,7 +10,7 @@ internal class Program
     {
         var factory = new ConnectionFactory()
         {
-            Uri = new Uri("cloud url")
+            Uri = new Uri("amqps://qmxuhgri:iCVIIpjCErxVOlx8f6tekdFAUeksHAL5@dog.lmq.cloudamqp.com/qmxuhgri")
         };
 
         using (var connection = factory.CreateConnection())
