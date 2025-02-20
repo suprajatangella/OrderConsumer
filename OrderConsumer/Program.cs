@@ -3,6 +3,8 @@ using System.Text;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Threading;
+using OrderConsumer;
+using Newtonsoft.Json;
 
 internal class Program
 {
@@ -27,11 +29,10 @@ internal class Program
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($"📦 Processing Order: {message}");
-
-                // Simulating order processing time
-                Thread.Sleep(2000);
-                Console.WriteLine($"✅ Order Completed: {message}");
+                Thread.Sleep(5000); // Simulate order processing
+                Order order = JsonConvert.DeserializeObject<Order>(message); // Convert JSON to Order Object
+                
+                Console.WriteLine($" [✔] Received Order: OrderID={order.OrderID}, Product={order.Product}, Quantity={order.Quantity}");
             };
 
             channel.BasicConsume(queue: "orderQueue",
